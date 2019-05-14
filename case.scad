@@ -48,7 +48,7 @@ mount_hole_diameter = 5;
 mount_height        = inner_height * 0.7;
 mount_taper_height  = mount_hole_diameter + wall_thickness;
 
-$fa = 30;
+$fa = 10;
 $fn = 360 / $fa;
 
 body();
@@ -103,7 +103,7 @@ module lid()
             -seal_path_depth / 2 + seal_turn_radius,
             -seal_compression_distance / 2
         ])
-            polystrut_3d(points = seal_path(), d = seal_diameter + tessalation_tolerance * 2, $fa = $fa * 3);
+            polystrut_3d(points = seal_path(), d = seal_diameter + tessalation_tolerance * 2, $fa = $fa * 2);
     }
 }
 
@@ -124,7 +124,7 @@ module body()
                 cr = corner_radius
             );
             translate([0, 0, inner_height + wall_thickness - seal_taper_height])
-                transform_hull(translate = [0, 0, seal_taper_height], translate_easing = EASE_OUT_IN, $fa = $fa * 5)
+                transform_hull(translate = [0, 0, seal_taper_height], translate_easing = EASE_OUT_IN, $fn = $fn / 3)
                 {
                     case_shape();
                     offset(r = seal_inset_width)
@@ -153,7 +153,7 @@ module body()
             -seal_path_depth / 2 + seal_turn_radius,
             inner_height + wall_thickness + seal_compression_distance / 2
         ])
-            polystrut_3d(points = seal_path(), d = seal_diameter + tessalation_tolerance * 2, $fa = $fa * 3);
+            polystrut_3d(points = seal_path(), d = seal_diameter + tessalation_tolerance * 2, $fa = $fa * 2);
     }
 
     mount();
@@ -182,7 +182,7 @@ module body()
             -seal_path_depth / 2 + seal_turn_radius,
             inner_height + wall_thickness + seal_compression_distance / 2
         ])
-            polystrut_3d(points = seal_path(), d = seal_diameter + tessalation_tolerance * 2, $fa = $fa * 3);
+            polystrut_3d(points = seal_path(), d = seal_diameter + tessalation_tolerance * 2, $fa = $fa * 2);
     }
 
     module window_support()
@@ -194,7 +194,7 @@ module body()
     module bolt_mount_taper()
     {
         translate([0, 0, inner_height + wall_thickness - bolt_mount_taper_height - thread_length])
-            transform_hull(translate = [0, 0, bolt_mount_taper_height], translate_easing = EASE_OUT_IN, translate_easing_exponent = 1.3, $fa = $fa * 5)
+            transform_hull(translate = [0, 0, bolt_mount_taper_height], translate_easing = EASE_OUT_IN, translate_easing_exponent = 1.3, $fn = $fn / 3)
             {
                 translate([-thread_diameter - seal_diameter - thin_wall_thickness * 2 + wall_thickness, 0, 0])
                     offset(r = -thread_diameter * 0.8)
